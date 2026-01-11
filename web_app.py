@@ -92,13 +92,16 @@ def create_folder_if_needed(folder_path):
     return folder.exists()
 
 
-def move_unmapped_files(case_number, destination_folder):
-    """Move files for a case from _UNROUTED to the destination folder."""
+def copy_unmapped_files(case_number, destination_folder):
+    """Copy files for a case from _UNROUTED to the destination folder.
+
+    Note: We COPY instead of move to be safe - user can delete originals manually.
+    """
     config = load_config()
     unrouted = Path(config["default_folder"]).expanduser()
     dest = Path(destination_folder).expanduser()
 
-    moved_files = []
+    copied_files = []
 
     # Get filenames from activity log for this case
     if LOG_FILE.exists():
@@ -122,15 +125,15 @@ def move_unmapped_files(case_number, destination_folder):
                             dest_file = dest / f"{stem}_{counter}{suffix}"
                             counter += 1
 
-                        # Move the file
+                        # Copy the file (not move - user can delete original manually)
                         import shutil
-                        shutil.move(str(source_file), str(dest_file))
-                        moved_files.append(filename)
+                        shutil.copy2(str(source_file), str(dest_file))
+                        copied_files.append(filename)
 
         except (json.JSONDecodeError, IOError):
             pass
 
-    return moved_files
+    return copied_files
 
 
 def get_existing_folders():
@@ -227,11 +230,11 @@ def add_case():
         config["cases"][case_number] = folder
         save_config(config)
 
-        # Move any existing files from _UNROUTED to the new folder
-        moved_files = move_unmapped_files(case_number, folder)
+        # Copy any existing files from _UNROUTED to the new folder
+        copied_files = copy_unmapped_files(case_number, folder)
 
-        if moved_files:
-            flash(f"Added case {case_number} → {folder} and moved {len(moved_files)} file(s)", "success")
+        if copied_files:
+            flash(f"Added case {case_number} → {folder} and copied {len(copied_files)} file(s) (originals still in _UNROUTED)", "success")
         else:
             flash(f"Added case {case_number} → {folder}", "success")
         return redirect(url_for("index"))
@@ -279,19 +282,8 @@ def edit_case(case_number):
     )
 
 
-@app.route("/delete/<path:case_number>", methods=["POST"])
-def delete_case(case_number):
-    """Delete a case mapping."""
-    config = load_config()
-
-    if case_number in config.get("cases", {}):
-        del config["cases"][case_number]
-        save_config(config)
-        flash(f"Deleted case {case_number}", "success")
-    else:
-        flash(f"Case {case_number} not found.", "error")
-
-    return redirect(url_for("index"))
+# Note: No delete route - user should edit config.json directly if they want to remove mappings
+# This keeps the app purely additive and safe
 
 
 @app.route("/settings", methods=["GET", "POST"])

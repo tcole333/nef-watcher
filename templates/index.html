@@ -58,7 +58,7 @@
             <tr>
                 <th>Case Number</th>
                 <th>Folder</th>
-                <th style="width: 120px;">Actions</th>
+                <th style="width: 80px;"></th>
             </tr>
         </thead>
         <tbody>
@@ -67,12 +67,7 @@
                 <td class="mono">{{ case_num }}</td>
                 <td class="mono text-muted">{{ folder }}</td>
                 <td>
-                    <div class="actions">
-                        <a href="{{ url_for('edit_case', case_number=case_num) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="{{ url_for('delete_case', case_number=case_num) }}" method="post" style="display: inline;" onsubmit="return confirm('Delete this case mapping?');">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
+                    <a href="{{ url_for('edit_case', case_number=case_num) }}" class="btn btn-primary btn-sm">Edit</a>
                 </td>
             </tr>
             {% endfor %}
