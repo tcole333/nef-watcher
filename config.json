@@ -4,5 +4,7 @@
   "email_password": "",
   "default_folder": "~/Documents/Legal/_UNROUTED",
   "processed_file": "~/.nef-processed.txt",
-  "cases": {}
+  "cases": {
+    "1:23-cv-00456": "~/Documents/Legal/Clients/Alexander"
+  }
 }

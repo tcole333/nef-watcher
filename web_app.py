@@ -282,8 +282,19 @@ def edit_case(case_number):
     )
 
 
-# Note: No delete route - user should edit config.json directly if they want to remove mappings
-# This keeps the app purely additive and safe
+@app.route("/delete/<path:case_number>", methods=["POST"])
+def delete_case(case_number):
+    """Delete a case mapping (doesn't delete any files, just the routing rule)."""
+    config = load_config()
+
+    if case_number in config.get("cases", {}):
+        del config["cases"][case_number]
+        save_config(config)
+        flash(f"Removed mapping for {case_number} (files unchanged)", "success")
+    else:
+        flash(f"Case {case_number} not found.", "error")
+
+    return redirect(url_for("index"))
 
 
 @app.route("/settings", methods=["GET", "POST"])
