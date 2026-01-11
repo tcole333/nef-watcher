@@ -34,14 +34,18 @@ Ask about:
 
 ### 2. Get a Sample NEF Email
 
-Before configuring anything, ask them to forward you a sample NEF email or copy/paste the contents. This is important because:
-- Different courts may format emails differently
-- We need to verify the parsing regex works for their specific court
-- It helps debug issues later
+Before configuring anything, ask them to share a sample NEF email. This is important because different courts may format emails differently.
 
-Ask: "Can you forward me a recent NEF email from PACER, or copy/paste the contents? I want to make sure the parser works with your court's format."
+Ask: "Do you have a recent NEF email from PACER? I need to see what format your court uses. You can either:
+- Copy/paste the email body here
+- Save the email as a .eml file and tell me the path
+- Take a screenshot if that's easier"
 
-If the parsing doesn't work with their email format, adjust the regex patterns in `nef_watcher.py` to match.
+Once you have the sample, check that the regex patterns in `nef_watcher.py` can extract:
+- The case number (like `1:24-cv-00123`)
+- The document URL (contains `ecf.*.uscourts.gov/doc1/` with `magic_num=`)
+
+If the parsing doesn't work with their email format, adjust the regex patterns to match.
 
 ### 3. Email Configuration
 
