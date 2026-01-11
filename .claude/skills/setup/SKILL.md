@@ -15,6 +15,12 @@ The user is likely an attorney who is NOT technical. They want something that ju
 
 Guide the user conversationally. Ask questions, understand their setup, and configure things for them. You can edit config.json and other files directly as needed.
 
+**Use the `AskUserQuestion` tool** to gather information - this gives them nice clickable options instead of having to type everything. Use it for:
+- Email provider selection
+- Folder location choices
+- Yes/no confirmations
+- Multiple choice questions
+
 **Don't assume anything** - ask about their email provider, folder structure, which court districts they work with, etc.
 
 ## Setup Flow
