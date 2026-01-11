@@ -32,7 +32,18 @@ Ask about:
 - Whether they have existing client folders or are starting fresh
 - What court district(s) they work with
 
-### 2. Email Configuration
+### 2. Get a Sample NEF Email
+
+Before configuring anything, ask them to forward you a sample NEF email or copy/paste the contents. This is important because:
+- Different courts may format emails differently
+- We need to verify the parsing regex works for their specific court
+- It helps debug issues later
+
+Ask: "Can you forward me a recent NEF email from PACER, or copy/paste the contents? I want to make sure the parser works with your court's format."
+
+If the parsing doesn't work with their email format, adjust the regex patterns in `nef_watcher.py` to match.
+
+### 3. Email Configuration
 
 Based on their provider, help them:
 1. Create an app password (guide them to the right URL)
@@ -50,7 +61,7 @@ The config uses these fields:
 }
 ```
 
-### 3. Folder Setup
+### 4. Folder Setup
 
 If they have existing folders:
 - Ask for the path
@@ -62,7 +73,7 @@ If starting fresh:
 - Create the folder structure
 - Set up `_UNROUTED` for unknown cases
 
-### 4. Case Mappings
+### 5. Case Mappings
 
 Case numbers look like `1:24-cv-00123` or `9:21-cv-00029-MJT`.
 
@@ -75,7 +86,7 @@ For each case they want to set up:
 }
 ```
 
-### 5. Background Services (Optional)
+### 6. Background Services (Optional)
 
 Ask if they want:
 - **Web interface running automatically**: Create a launchd plist
@@ -93,7 +104,7 @@ crontab -e
 # Add: */2 * * * * cd /path/to/project && python3 nef_watcher.py >> /tmp/nef.log 2>&1
 ```
 
-### 6. Test & Wrap Up
+### 7. Test & Wrap Up
 
 - Run `python3 nef_watcher.py` to test
 - Show them the web interface at http://localhost:5050

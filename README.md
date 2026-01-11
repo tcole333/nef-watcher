@@ -21,7 +21,7 @@ cd pacer-download
 
 # Open Claude Code and run the setup wizard
 claude
-# Then type: /setup
+# Then ask claude to help you get it set up
 ```
 
 The setup wizard will walk you through everything.
