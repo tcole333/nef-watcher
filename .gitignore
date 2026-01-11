@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Config with credentials (use config.json.example as template)
+# Note: config.json is included with empty credentials for setup
+
+# Local state
+.nef-processed.txt
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# macOS
+.DS_Store
+
+# Test artifacts
+.playwright-mcp/

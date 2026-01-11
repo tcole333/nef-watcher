@@ -1,0 +1,8 @@
+{
+  "email_provider": "",
+  "email_user": "",
+  "email_password": "",
+  "default_folder": "~/Documents/Legal/_UNROUTED",
+  "processed_file": "~/.nef-processed.txt",
+  "cases": {}
+}

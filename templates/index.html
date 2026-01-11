@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Run Watcher -->
+<div class="card">
+    <div class="card-header">
+        <span>Watcher Status</span>
+        <form action="{{ url_for('run_watcher') }}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-success btn-sm">Run Now</button>
+        </form>
+    </div>
+    <div class="card-body">
+        <p>Click "Run Now" to check for new NEF emails and download documents.</p>
+        <p class="text-muted" style="margin-top: 8px;">
+            Tip: Set up a cron job to run automatically every few minutes.
+        </p>
+    </div>
+</div>
+
+<!-- Unmapped Cases (needs attention) -->
+{% if unmapped_cases %}
+<div class="card" style="border-left: 4px solid #f39c12;">
+    <div class="card-header">
+        <span>⚠️ Unmapped Cases ({{ unmapped_cases|length }})</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Case Number</th>
+                <th>Last Seen</th>
+                <th style="width: 100px;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for case_num, timestamp in unmapped_cases %}
+            <tr>
+                <td class="mono">{{ case_num }}</td>
+                <td class="text-muted">{{ timestamp|format_datetime }}</td>
+                <td>
+                    <a href="{{ url_for('add_case', case=case_num) }}" class="btn btn-success btn-sm">+ Map</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Case Mappings -->
+<div class="card">
+    <div class="card-header">
+        <span>Case Mappings ({{ cases|length }})</span>
+        <a href="{{ url_for('add_case') }}" class="btn btn-primary btn-sm">+ Add Case</a>
+    </div>
+    {% if cases %}
+    <table>
+        <thead>
+            <tr>
+                <th>Case Number</th>
+                <th>Folder</th>
+                <th style="width: 120px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for case_num, folder in cases.items() %}
+            <tr>
+                <td class="mono">{{ case_num }}</td>
+                <td class="mono text-muted">{{ folder }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('edit_case', case_number=case_num) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ url_for('delete_case', case_number=case_num) }}" method="post" style="display: inline;" onsubmit="return confirm('Delete this case mapping?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="card-body empty-state">
+        <p>No case mappings yet.</p>
+        <p style="margin-top: 8px;"><a href="{{ url_for('add_case') }}">Add your first case</a></p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Recent Activity -->
+<div class="card">
+    <div class="card-header">
+        <span>Recent Activity</span>
+    </div>
+    {% if activity %}
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 130px;">Time</th>
+                <th>Event</th>
+                <th style="width: 140px;">Case</th>
+                <th style="width: 80px;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in activity %}
+            <tr>
+                <td class="text-muted">{{ entry.timestamp|format_datetime }}</td>
+                <td>
+                    {{ entry.message }}
+                    {% if entry.filename %}
+                    <br><span class="mono text-muted">{{ entry.filename }}</span>
+                    {% endif %}
+                </td>
+                <td class="mono">{{ entry.case_num or '-' }}</td>
+                <td>
+                    <span class="status-badge status-{{ entry.status }}">{{ entry.status }}</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="card-body empty-state">
+        <p>No activity yet.</p>
+        <p class="text-muted" style="margin-top: 8px;">Activity will appear here after running the watcher.</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Config Summary -->
+<div class="card">
+    <div class="card-header">
+        <span>Configuration</span>
+        <a href="{{ url_for('settings') }}" class="btn btn-primary btn-sm">Edit Settings</a>
+    </div>
+    <div class="card-body">
+        <table style="width: auto;">
+            <tr>
+                <td style="padding-right: 20px; color: #666;">Email:</td>
+                <td class="mono">{{ config.email_user or '(not set)' }}</td>
+            </tr>
+            <tr>
+                <td style="padding-right: 20px; color: #666;">Default Folder:</td>
+                <td class="mono">{{ config.default_folder }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

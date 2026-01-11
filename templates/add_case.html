@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <span>Add New Case</span>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="form-group">
+                <label for="case_number">Case Number</label>
+                <input type="text" id="case_number" name="case_number" value="{{ prefill_case }}" placeholder="1:24-cv-00123" required>
+                <small>Format: 1:23-cv-00456 or 5:24-cr-00789</small>
+            </div>
+
+            <div class="form-group">
+                <label for="folder">Destination Folder</label>
+                <input type="text" id="folder" name="folder" placeholder="~/Documents/Legal/Clients/ClientName/EDNC" required>
+                <small>Use ~ for home directory. Folder will be created automatically.</small>
+            </div>
+
+            {% if existing_folders %}
+            <div class="form-group">
+                <label>Or select existing folder:</label>
+                <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; padding: 8px;">
+                    {% for folder in existing_folders %}
+                    <div style="padding: 6px 8px; cursor: pointer; border-radius: 4px;"
+                         class="folder-option"
+                         onclick="document.getElementById('folder').value = '{{ folder }}'">
+                        <code class="mono">{{ folder }}</code>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 24px;">
+                <button type="submit" class="btn btn-primary">Add Case</button>
+                <a href="{{ url_for('index') }}" class="btn" style="margin-left: 8px;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .folder-option:hover {
+        background: #e9ecef;
+    }
+</style>
+{% endblock %}
