@@ -19,9 +19,9 @@ The easiest way to set this up is with [Claude Code](https://claude.com/product/
 git clone https://github.com/tcole333/nef-watcher
 cd nef-watcher
 
-# Open Claude Code and run the setup wizard
+# Open Claude Code and ask for help setting up
 claude
-# Then ask claude to help you get it set up
+# Just say "help me set up NEF Watcher" and Claude will guide you
 ```
 
 The setup wizard will walk you through everything.

@@ -1,3 +1,8 @@
+---
+name: setup
+description: Set up NEF Watcher for downloading PACER court documents. Use when the user wants to configure email, set up folders, add case mappings, or get started with NEF Watcher.
+---
+
 # NEF Watcher Setup Wizard
 
 Help the user set up NEF Watcher - a tool that downloads PACER court documents from email notifications.
