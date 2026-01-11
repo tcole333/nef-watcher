@@ -120,3 +120,14 @@ crontab -e
 - **Edit files directly** - you can modify config.json, create folders, etc.
 - **Adapt to their setup** - if something doesn't match, adjust the code/config
 - **Keep credentials local** - reassure them nothing leaves their machine
+
+## CRITICAL: Don't Delete or Overwrite Their Files
+
+- **NEVER delete any of their existing files or folders**
+- **NEVER overwrite their existing documents**
+- **Ask before creating folders** - make sure you're not stomping on something
+- **If they have existing client folders, work WITH that structure** - don't reorganize
+- **Back up config.json before making changes** (copy to config.json.bak)
+- **When in doubt, ask first**
+
+They may have years of organized files. One wrong `rm` or overwrite could be catastrophic.
