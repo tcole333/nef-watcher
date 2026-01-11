@@ -12,12 +12,12 @@ When you receive a NEF (Notice of Electronic Filing) email from a federal court:
 
 ## Quick Start with Claude Code
 
-The easiest way to set this up is with [Claude Code](https://claude.ai/code):
+The easiest way to set this up is with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (the terminal app):
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/pacer-download
-cd pacer-download
+git clone https://github.com/tcole333/nef-watcher
+cd nef-watcher
 
 # Open Claude Code and run the setup wizard
 claude
