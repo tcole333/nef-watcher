@@ -12,7 +12,7 @@ When you receive a NEF (Notice of Electronic Filing) email from a federal court:
 
 ## Quick Start with Claude Code
 
-The easiest way to set this up is with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (the terminal app):
+The easiest way to set this up is with [Claude Code](https://claude.com/product/claude-code) (the terminal app):
 
 ```bash
 # Clone the repo
